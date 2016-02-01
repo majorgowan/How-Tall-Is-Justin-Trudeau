@@ -126,22 +126,6 @@ def show_questionnaire_answers():
         flash('Your ip: ' + str(user_ip) + '. . . Thanks for your input you lovely sod!')
     return render_template('show_questionnaire_answers.html', answer_list=answer_list)
 
-#@app.route('/')
-#def show_entries():
-#    cur = g.db.execute('SELECT title, text FROM entries ORDER BY id DESC')
-#    entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
-#    return render_template('show_entries.html', entries=entries)
-
-#@app.route('/add', methods=['POST'])
-#def add_entry():
-#    if not session.get('logged_in'):
-#        abort(401)
-#    g.db.execute('INSERT INTO entries (title, text) VALUES (?, ?)', \
-#            [request.form['title'], request.form['text']])
-#    g.db.commit()
-#    flash('New entry was successfully posted')
-#    return redirect(url_for('show_entries'))
-
 if __name__ == '__main__':
     app.run()
 
