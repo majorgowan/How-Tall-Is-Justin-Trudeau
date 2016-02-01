@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block body %}
+  <div class=questions>
+      <dl>
+          <dt> You think Justin Trudeau is . . . 
+          <dd> {{ answer_list[1] }}
+          <dt> You think Stephen Harper is . . .
+          <dd> {{ answer_list[2] }}
+          <dt> You think Barack Obama is . . .
+          <dd> {{ answer_list[3] }}
+          <dt> Best pizza is made by . . .
+          <dd> {{ answer_list[4] }}
+          <dt> To drink you prefer . . . 
+          <dd> {{ answer_list[5] }}
+          <br><br>
+          <dt> Your height is . . . 
+          <dd> {{ answer_list[6] }}
+          <dt> Your shoe size is . . .
+          <dd> {{ answer_list[7] }}
+          <dt> You're a . . .
+          <dd> {{ answer_list[8] }}
+      </dl>
+  </div>
+<!--  <ul class=entries>
+      {% for entry in entries %}
+        <li><h2>{{ entry.title }}</h2>{{ entry.text|safe }}
+      {% else %}
+        <li><em>Unbelievable.  No entries here so far</em>
+      {% endfor %}
+  </ul>
+  -->
+{% endblock %}
+

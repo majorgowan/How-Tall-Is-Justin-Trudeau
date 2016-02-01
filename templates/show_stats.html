@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block body %}
+  <div class=questions>
+      <dl>
+          <dt> You think Justin Trudeau is . . . 
+          <dd> {{ answer_list[1] }}
+          <dt> You think Barack Obama is . . .
+          <dd> {{ answer_list[2] }}
+          <br><br>
+          <dt> Your height is . . . 
+          <dd> {{ answer_list[3] }}
+          <dt> You're a . . .
+          <dd> {{ answer_list[4] }}
+          <dt> Your city is . . . 
+          <dd> {{ answer_list[5] }}
+      </dl>
+  </div>
+{% endblock %}
+

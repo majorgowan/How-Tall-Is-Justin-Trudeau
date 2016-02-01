@@ -1,0 +1,191 @@
+{% extends "layout.html" %}
+{% block body %}
+  <div class=questions>
+  <form action="{{ url_for('show_stats') }}" method=post class=add-entry>
+      <p align=center>Adjust the sliders to guess the heights of Barack and J.T.</p>
+
+      <div class="wall">
+          <div class="wall_inner">
+              <div class="obama_all">
+                  <div id="obamaSlider">
+                      <span id="infoSlider"></span>
+                  </div>
+                  <div class="obama_stack">
+                      <div>
+                          <div>
+                              <img id="obama_image" height=260 align=center 
+                                   src="{{ url_for('static', filename='images/obama_off_white_trans.png') }}" />
+                          </div>
+                          <div id="obamaLabel">
+                              5 ft, 0.0 in
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="trudeau_all">
+                  <div id="trudeauSlider">
+                      <span id="infoSlider"></span>
+                  </div>
+  
+                  <div class="trudeau_stack">
+                      <div>
+                          <div>
+                              <!--<img height=180 align=center src="superman_transparent.png" />-->
+                              <img height=280 align=center
+                                   src="{{ url_for('static', filename='images/trudeau_body_headless.png') }}" />
+                          </div>
+                          <div>
+                              <!-- trudeau's head -->
+                              <img id="image" align=center height=90 
+                                   src="{{ url_for('static', filename='images/trudeau_head_transparent_trim.png') }}" />
+                          </div>
+                          <div id="trudeauLabel">
+                              5 ft, 0.0 in
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <br>
+
+      <div class="user_slider_all">
+          <div> How tall are you (if it's not a personal question)?
+          </div>
+          &nbsp;
+          &nbsp;
+          <div id="userSlider">
+              <span id="infoSlider"></span>
+          </div>
+          &nbsp;
+          &nbsp;
+          <div id="user_height_label">
+              5 ft, 0.0 in
+          </div>
+      </div>
+      <div class="user_gender_all">
+          <div> What is your gender (iinapq)?
+          </div>
+          &nbsp;
+          &nbsp;
+          <div id="user_gender_radio">
+              <input type="radio" name="gender" value="male"> Male 
+              &nbsp;
+              &nbsp;
+              <input type="radio" name="gender" value="female"> Female
+              <input type="hidden" name="gender" value="" checked="checked">
+          </div>
+      </div>
+
+
+      <p align=center>
+         <input type=submit name=submit value="submit!">
+      </p>
+      <!-- hidden values for Flask retrieval -->
+      <input type="hidden" id="trudeauHeightHidden" name="trudeauHeightHidden" value="600">
+      <input type="hidden" id="obamaHeightHidden" name="obamaHeightHidden" value="600">
+      <input type="hidden" id="userHeightHidden" name="userHeightHidden" value="600">
+  </form>
+  </div>
+
+
+<script type="text/javascript" 
+        src="{{ url_for('static', filename='jquery/jquery-2.2.0.min.js') }}"></script>
+<script type="text/javascript" 
+        src="{{ url_for('static', filename='jquery/jquery-ui-1.11.4.custom/jquery-ui.min.js') }}"></script>
+<link rel="stylesheet" type="text/css" 
+        href="{{ url_for('static', filename='jquery/jquery-ui-1.11.4.custom/jquery-ui.css') }}">
+
+<script type='text/javascript'>
+
+/* from http://jsfiddle.net/PrLv9/2/ */
+/* slider to resize image */
+
+var originalHeight = $("#image").height();
+$("#image").height(1.0*originalHeight)
+
+/* $("#infoSlider").text(originalHeight + ', 100%'); */
+
+$("#trudeauSlider").slider({
+    value: 600,
+    orientation: 'vertical',
+    min: 600,
+    max: 840,
+    step: 5,
+    slide: function (event, ui) {
+        var factor = 0.58333
+        var inchShift = 600
+        var fracShift = 0
+        var frac = fracShift + (ui.value-inchShift)*factor
+        var fraction = (1 + frac / 100),
+        newHeight = originalHeight * fraction;
+
+/*        $("#infoSlider").text(Math.floor(newHeight)); */
+
+        $("#image").height(newHeight);
+
+        feet = Math.floor(0.1/12.0*ui.value)
+        inches = 0.1*ui.value - 12.0*feet
+        document.getElementById("trudeauLabel").textContent = feet + " ft, " + inches.toFixed(1) + " in";
+    },
+    /* set value of hidden trudeaHeight element */
+    change: function (event, ui) {
+        $("#trudeauHeightHidden").attr('value', ui.value);
+    }
+});
+
+var obamaHeight = $("#obama_image").height();
+$("#obama_image").height(1.08*obamaHeight);
+
+$("#obamaSlider").slider({
+    value: 600,
+    orientation: 'vertical',
+    min: 600,
+    max: 840,
+    step: 5,
+    slide: function (event, ui) {
+        var factor = 0.20417
+        var inchShift = 600
+        var fracShift = 8
+        var frac = fracShift + (ui.value-inchShift)*factor
+        var fraction = (1 + frac / 100),
+        newHeight = obamaHeight * fraction;
+
+        $("#obama_image").height(newHeight);
+
+        feet = Math.floor(0.1/12.0*ui.value)
+        inches = 0.1*ui.value - 12.0*feet
+        document.getElementById("obamaLabel").textContent = feet + " ft, " + inches.toFixed(1) + " in";
+    },
+    /* set value of hidden obamaHeight element */
+    change: function (event, ui) {
+        $("#obamaHeightHidden").attr('value', ui.value);
+    }
+});
+
+
+var userHeight = 600;
+
+$("#userSlider").slider({
+    value: 600,
+    orientation: 'horizontal',
+    min: 480,
+    max: 840,
+    step: 5,
+    slide: function (event, ui) {
+        feet = Math.floor(0.1/12.0*ui.value)
+        inches = 0.1*ui.value - 12.0*feet
+        document.getElementById("user_height_label").textContent = feet + " ft, " + inches.toFixed(1) + " in";
+    },
+    /* set value of hidden obamaHeight element */
+    change: function (event, ui) {
+        $("#userHeightHidden").attr('value', ui.value);
+    }
+});
+
+
+</script>
+
+{% endblock %}
+

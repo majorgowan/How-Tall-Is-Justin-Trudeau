@@ -1,0 +1,13 @@
+<!doctype html>
+<title>How Tall is Justin Trudeau?</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<div class=page>
+    <h1>How tall is Justin Trudeau?</h1>
+    {% for message in get_flashed_messages() %}
+      <div class=flash>{{ message }}</div>
+    {% endfor %}
+    {% block body %}{% endblock %}
+    <div class=metanav>
+          <a href="{{ url_for('menu') }}">silly surveys home</a>
+    </div>
+</div>
