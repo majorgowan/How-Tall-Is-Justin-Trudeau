@@ -59,6 +59,7 @@ def how_tall_is_graph_stats():
     route = request.access_route + [request.remote_addr]
     remote_addr = next((addr for addr in reversed(route) 
                               if addr not in trusted_proxies), request.remote_addr)
+    user_ip = remote_addr
     # get user location
     user_location = urllib.urlopen('http://freegeoip.net/json/' + user_ip).read()
     # survey results
