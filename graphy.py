@@ -49,11 +49,61 @@ def questionnaire():
 def how_tall_is():
     return render_template('how_tall_is.html')
 
+@app.route('/how_tall_is_graph_stats')
+def how_tall_is_graph_stats():
+    import urllib
+    # get user ip address
+    # from http://stackoverflow.com/questions/22868900/ ...
+    #                    how-do-i-safely-get-the-users-real-ip-address-in-flask-using-mod-wsgi
+    trusted_proxies = {'127.0.0.1', '127.7.30.1'}  # define your own set
+    route = request.access_route + [request.remote_addr]
+    remote_addr = next((addr for addr in reversed(route) 
+                              if addr not in trusted_proxies), request.remote_addr)
+    # get user location
+    user_location = urllib.urlopen('http://freegeoip.net/json/' + user_ip).read()
+    # survey results
+    trudeau = int(request.form.get("trudeauHeightHidden"))
+    obama = int(request.form.get("obamaHeightHidden"))
+    user_height = int(request.form.get("userHeightHidden"))
+    user_gender = request.form["gender"]
+    # query database to get lists of past responses
+    female_data = g.db.execute('SELECT trudeau, obama FROM heights WHERE user_gender=?', 'female').fetchall()
+    male_data = g.db.execute('SELECT trudeau, obama FROM heights WHERE user_gender=?', 'male').fetchall()
+    # check if ip is unique
+    ip_list = g.db.execute('SELECT user_ip FROM heights').fetchall()
+    if ip_list is not None:
+        # ip_list is a list of 1-tuples, convert to list of strings
+        ip_list = [a[0] for a in ip_list]
+    # for testing purposes, don't use the ip address restriction
+    ip_list = []
+    if unicode(user_ip) in ip_list:
+        flash('Your ip: ' + str(user_ip) + ' has already answered, you sneaky sod!!')
+        answer_list = g.db.execute('SELECT * FROM heights WHERE user_ip=?', [user_ip]).fetchall()[0]
+        answer_list = answer_list[1:]
+    else:
+        answer_list = [user_ip, trudeau, obama, \
+                       user_height, user_gender, user_location]
+        # record results in database
+        g.db.execute( \
+            'INSERT INTO heights ' + \
+            '    (user_ip, trudeau, obama, ' + \
+                 'user_height, user_gender, user_location) ' + \
+            'VALUES (?, ?, ?, ?, ?, ?)', \
+            answer_list)
+        g.db.commit()
+        print(answer_list)
+        flash('Your ip: ' + str(user_ip) + '. . . Thanks for your input you lovely sod!')
+
+    return render_template('how_tall_is_graph_stats', \
+            male_list=male_list, female_list=female_list, \
+            user_gender=user_gender, obama=obama, trudeau=trudeau)
+
 @app.route('/show_stats', methods=['POST'])
 def show_stats():
     import urllib
     # get user ip address
-    # from http://stackoverflow.com/questions/22868900/how-do-i-safely-get-the-users-real-ip-address-in-flask-using-mod-wsgi
+    # from http://stackoverflow.com/questions/22868900/ ...
+    #                    how-do-i-safely-get-the-users-real-ip-address-in-flask-using-mod-wsgi
     trusted_proxies = {'127.0.0.1', '127.7.30.1'}  # define your own set
     route = request.access_route + [request.remote_addr]
     remote_addr = next((addr for addr in reversed(route) 

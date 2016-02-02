@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block body %}
+  <div class=spitback>
+      <p>Male answers . . . </p>
+      {% for item in male_list %}
+        trudeau = {{ item[0] }}, obama = {{ item[1] }}
+      {% endfor %}
+  </div>
+{% endblock %}
+
