@@ -1,11 +1,13 @@
 # all the imports
 import sqlite3
+import os
 from flask import Flask, request, session, g, redirect, url_for, \
         abort, render_template, flash
 from contextlib import closing
 
 # configuration
-DATABASE = 'graphyDB.db'
+DATABASE = os.path.join(os.environ.get('OPENSHIFT_DATA_DIR'), 'graphyDB.db')
+#DATABASE = 'graphyDB.db'
 DEBUG = True
 SECRET_KEY = 'development key'
 
