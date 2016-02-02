@@ -49,7 +49,7 @@ def questionnaire():
 def how_tall_is():
     return render_template('how_tall_is.html')
 
-@app.route('/how_tall_is_graph_stats')
+@app.route('/how_tall_is_graph_stats', methods=['POST'])
 def how_tall_is_graph_stats():
     import urllib
     # get user ip address
