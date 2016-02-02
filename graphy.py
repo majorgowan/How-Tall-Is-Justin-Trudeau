@@ -53,7 +53,13 @@ def how_tall_is():
 def show_stats():
     import urllib
     # get user ip address
-    user_ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+    # from http://stackoverflow.com/questions/22868900/how-do-i-safely-get-the-users-real-ip-address-in-flask-using-mod-wsgi
+    trusted_proxies = {'127.0.0.1', '127.7.30.1'}  # define your own set
+    route = request.access_route + [request.remote_addr]
+    remote_addr = next((addr for addr in reversed(route) 
+                              if addr not in trusted_proxies), request.remote_addr)
+    #user_ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+    user_ip = remote_addr
     if user_ip is not None:
         user_location = urllib.urlopen('http://freegeoip.net/json/' + user_ip).read()
         #print('Your location is ' + user_location)
