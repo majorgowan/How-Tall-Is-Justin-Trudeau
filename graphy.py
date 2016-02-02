@@ -94,7 +94,7 @@ def how_tall_is_graph_stats():
         print(answer_list)
         flash('Your ip: ' + str(user_ip) + '. . . Thanks for your input you lovely sod!')
 
-    return render_template('how_tall_is_graph_stats', \
+    return render_template('how_tall_is_graph_stats.html', \
             male_list=male_list, female_list=female_list, \
             user_gender=user_gender, obama=obama, trudeau=trudeau)
 
