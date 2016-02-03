@@ -51,8 +51,8 @@ def how_tall_is_graph_stats():
     # get user ip address
     # from http://stackoverflow.com/questions/22868900/ ...
     #                    how-do-i-safely-get-the-users-real-ip-address-in-flask-using-mod-wsgi
-    # trusted_proxies = {'127.0.0.1', '127.7.30.1'}  # define your own set
-    trusted_proxies = []
+    trusted_proxies = {'127.0.0.1', '127.7.30.1'}  # define your own set
+    # trusted_proxies = []
     route = request.access_route + [request.remote_addr]
     remote_addr = next((addr for addr in reversed(route) 
                               if addr not in trusted_proxies), request.remote_addr)
