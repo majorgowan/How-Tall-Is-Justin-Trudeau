@@ -2,68 +2,59 @@
 {% block body %}
   <div class=questions>
   <form action="{{ url_for('how_tall_is_graph_stats') }}" method=post class=add-entry>
-      <p align=center>Adjust the sliders to guess the heights of Barack and J.T.</p>
 
-      <div class="wall">
-          <div class="wall_inner">
-              <div class="obama_all">
-                  <div id="obamaSlider">
-                      <span id="infoSlider"></span>
-                  </div>
-                  <div class="obama_stack">
-                      <div>
+      <table class="outer_wall"><tr>
+          <td class="instructions">
+              <p align=center>Please adjust the slider to your own height</p>
+          </td>
+          <td class="wall">
+              <div class="wall_inner">
+                  <div class="user_all">
+                      <div id="userSlider">
+                          <span id="infoSlider"></span>
+                      </div>
+                      <div class="user_stack">
                           <div>
-                              <img id="obama_image" height=260 align=center 
-                                   src="{{ url_for('static', filename='images/obama_off_white_trans.png') }}" />
+                              <div>
+                                  <img id="user_image" height=130 align=center 
+                                       src="{{ url_for('static', filename='images/user_picture_trans.png') }}" />
+                              </div>
+                              <div id="userLabel">
+                                  5 ft, 0.0 in
+                              </div>
                           </div>
-                          <div id="obamaLabel">
-                              5 ft, 0.0 in
+                      </div>
+                  </div>
+                  &nbsp;&nbsp;
+                  <div class="trudeau_all">
+                      <div id="trudeauSlider">
+                          <span id="infoSlider"></span>
+                      </div>
+                      <div class="trudeau_stack">
+                          <div>
+                              <div>
+                                  <!--<img height=180 align=center src="superman_transparent.png" />-->
+                                  <img height=140 align=center
+                                       src="{{ url_for('static', filename='images/trudeau_body_headless.png') }}" />
+                              </div>
+                              <div>
+                                  <!-- trudeau's head -->
+                                  <img id="image" align=center height=45 
+                                       src="{{ url_for('static', filename='images/trudeau_head_transparent_trim.png') }}" />
+                              </div>
+                              <div id="trudeauLabel">
+                                  5 ft, 0.0 in
+                              </div>
                           </div>
                       </div>
                   </div>
               </div>
-              <div class="trudeau_all">
-                  <div id="trudeauSlider">
-                      <span id="infoSlider"></span>
-                  </div>
-  
-                  <div class="trudeau_stack">
-                      <div>
-                          <div>
-                              <!--<img height=180 align=center src="superman_transparent.png" />-->
-                              <img height=280 align=center
-                                   src="{{ url_for('static', filename='images/trudeau_body_headless.png') }}" />
-                          </div>
-                          <div>
-                              <!-- trudeau's head -->
-                              <img id="image" align=center height=90 
-                                   src="{{ url_for('static', filename='images/trudeau_head_transparent_trim.png') }}" />
-                          </div>
-                          <div id="trudeauLabel">
-                              5 ft, 0.0 in
-                          </div>
-                      </div>
-                  </div>
-              </div>
           </div>
-      </div>
+          <td class="instructions">
+              <p align=center>Now adjust the slider to guess the height of the real J.T.</p>
+          </td>
+      </tr></table>
 
-      <br>
-
-      <div class="user_slider_all">
-          <div> How tall are you (if it's not a personal question)?
-          </div>
-          &nbsp;
-          &nbsp;
-          <div id="userSlider">
-              <span id="infoSlider"></span>
-          </div>
-          &nbsp;
-          &nbsp;
-          <div id="user_height_label">
-              5 ft, 0.0 in
-          </div>
-      </div>
       <div class="user_gender_all">
           <div> What is your gender (iinapq)?
           </div>
@@ -74,7 +65,7 @@
               &nbsp;
               &nbsp;
               <input type="radio" name="gender" value="female"> Female
-              <input type="hidden" name="gender" value="" checked="checked">
+              <input type="hidden" name="gender" value="neither" checked="checked">
           </div>
       </div>
 
@@ -84,7 +75,6 @@
       </p>
       <!-- hidden values for Flask retrieval -->
       <input type="hidden" id="trudeauHeightHidden" name="trudeauHeightHidden" value="600">
-      <input type="hidden" id="obamaHeightHidden" name="obamaHeightHidden" value="600">
       <input type="hidden" id="userHeightHidden" name="userHeightHidden" value="600">
   </form>
   </div>
@@ -135,10 +125,10 @@ $("#trudeauSlider").slider({
     }
 });
 
-var obamaHeight = $("#obama_image").height();
-$("#obama_image").height(1.08*obamaHeight);
+var userHeight = $("#user_image").height();
+$("#user_image").height(1.08*userHeight);
 
-$("#obamaSlider").slider({
+$("#userSlider").slider({
     value: 600,
     orientation: 'vertical',
     min: 600,
@@ -150,40 +140,19 @@ $("#obamaSlider").slider({
         var fracShift = 8
         var frac = fracShift + (ui.value-inchShift)*factor
         var fraction = (1 + frac / 100),
-        newHeight = obamaHeight * fraction;
+        newHeight = userHeight * fraction;
 
-        $("#obama_image").height(newHeight);
+        $("#user_image").height(newHeight);
 
         feet = Math.floor(0.1/12.0*ui.value)
         inches = 0.1*ui.value - 12.0*feet
-        document.getElementById("obamaLabel").textContent = feet + " ft, " + inches.toFixed(1) + " in";
+        document.getElementById("userLabel").textContent = feet + " ft, " + inches.toFixed(1) + " in";
     },
-    /* set value of hidden obamaHeight element */
-    change: function (event, ui) {
-        $("#obamaHeightHidden").attr('value', ui.value);
-    }
-});
-
-
-var userHeight = 600;
-
-$("#userSlider").slider({
-    value: 600,
-    orientation: 'horizontal',
-    min: 480,
-    max: 840,
-    step: 5,
-    slide: function (event, ui) {
-        feet = Math.floor(0.1/12.0*ui.value)
-        inches = 0.1*ui.value - 12.0*feet
-        document.getElementById("user_height_label").textContent = feet + " ft, " + inches.toFixed(1) + " in";
-    },
-    /* set value of hidden obamaHeight element */
+    /* set value of hidden userHeight element */
     change: function (event, ui) {
         $("#userHeightHidden").attr('value', ui.value);
     }
 });
-
 
 </script>
 

@@ -1,10 +1,76 @@
 {% extends "layout.html" %}
 {% block body %}
-  <div class=spitback>
-      <p>Male answers . . . </p>
-      {% for item in male_data %}
-        trudeau = {{ item[0] }}, obama = {{ item[1] }}
-      {% endfor %}
+  <div>
+    <p align=center><canvas id="graph" width="400px" height="300px"></canvas>
+    </p>
   </div>
+
+<script>
+function scatter(female_user, female_trudeau, male_user, male_trudeau, neither_user, neither_trudeau) {
+    var graph = document.getElementById("graph");
+    graph.width = graph.width;   /* "magic" to clear graph or something */
+    var g = graph.getContext("2d");
+    var xBuffer = graph.width/10;
+    var yBuffer = graph.height/10;
+    var width = graph.width - 2*xBuffer;
+    var height = graph.height - 2*yBuffer;
+
+    var xMin = 600*0.9;
+    var xMax = 840*1.1;
+    var xRange = xMax - xMin;
+
+    var yMin = 600*0.9;
+    var yMax = 840*1.1;
+    var yRange = yMax - yMin;
+
+    /* draw 10 tick marks */
+    var nTick = 10;
+    var XTickInterval = xRange*1.1/nTick;
+    var YTickInterval = yRange*1.1/nTick;
+    for (var i=0; i <= 10; i++) {
+        g.fillRect(xBuffer,yBuffer+height-height*i/nTick,5,1);
+        g.textAlign = "right"; 
+        g.textBaseline = "middle";
+        g.fillText(Math.floor(yMin + YTickInterval*i),xBuffer-3,yBuffer+height-height*i/nTick);
+
+        g.fillRect(xBuffer+width*i/nTick,yBuffer+height-5,1,5);
+        g.textAlign = "center";
+        g.textBaseline = "top";
+        g.fillText(Math.floor(xMin + XTickInterval*i),xBuffer+width*i/nTick,yBuffer+height);
+    }
+    g.strokeRect(xBuffer,yBuffer,width,height);
+
+    function plot_points(data_x, data_y, pencolor) {
+       /* scale the data to Canvas coordinates */
+       var xC = new Array(data_x.length);
+       var yC = new Array(data_y.length);
+
+       for (var i=0; i < data_x.length; i++) {
+           xC[i] = Math.floor(xBuffer + width*(data_x[i] - xMin)/xRange);
+           yC[i] = Math.floor(yBuffer+height - height*(data_y[i] - yMin)/yRange);
+       }
+
+       /* plot the points as small squares */
+       g.fillStyle = pencolor;
+
+       for (var i=0; i < data_x.length; i++) {
+           g.fillRect(xC[i]-3,yC[i]-3,7,7);
+       }
+       
+    }
+
+    plot_points(female_user, female_trudeau, "#ff0066");
+    plot_points(male_user, male_trudeau, "#005580");
+    plot_points(neither_user, neither_trudeau, "#a3a375");
+}
+
+/* call function to make plot */
+
+scatter({{ female_user }}, {{ female_trudeau }},
+        {{ male_user }}, {{ male_trudeau }},
+        {{ neither_user }}, {{ neither_trudeau }});
+
+</script> 
+  
 {% endblock %}
 

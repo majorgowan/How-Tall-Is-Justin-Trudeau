@@ -4,43 +4,6 @@ h1, h2         { font-family: 'Georgia', serif; margin: 0.5em; }
 h1             { border-bottom: 2px solid #eee; }
 h2             { font-size: 1.2em; }
 
-.questions p {
-     font-family: sans-serif;
-     color: #000000;
-     font-weight: bold;
-     font-size: 1.4em;
-   }
-.questions dl {
-     width: 100%;
-     overflow: hidden;
-     padding: 10pt;
-     line-height: 2em;
-     margin: 0;
-     text-align: center;
-   }
-.questions dt {
-     float: left;
-     font-weight: bold;
-     font-size: 1.2em;
-     width: 60%;
-     /* adjust the width; make sure the total of both is 100% */
-     padding: 0;
-     margin: 0
-   }
-.questions dd {
-     float: left;
-     width: 35%;
-     /* adjust the width; make sure the total of both is 100% */
-     padding: 0;
-     margin: 0;
-   }
-.questions select {
-     width: 8em;
-   }
-.questions input[type=submit] {
-     font-size: 1.5em;
-   }
-
 .menu ul {
      width: 100%;
      overflow: hidden;
@@ -58,14 +21,9 @@ h2             { font-size: 1.2em; }
 
 .page          { margin: 2em auto; width: 45em; border: 7px solid #ccc; 
                  paddding: 0.8em; background: white; }
-.entries       { list-style: none; margin: 0; padding: 0; }
-.entries li    { margin: 0.8em 1.2em; }
-.entries li h2 { margin-left: -1em; }
 
 .graph         { text-align: center; }
 
-.add-entry     { font-size: 0.9em; border-bottom: 1px solid #ccc; }
-.add-entry d1  { font-weight: bold; }
 .metanav       { text-align: right; font-size: 0.8em; padding: 0.3em;
                  margin-bottom: 1em; background: #fafafa; }
 .flash         { background: #eee5F5; padding: 0.5em;
@@ -74,46 +32,48 @@ h2             { font-size: 1.2em; }
 
 
 /* from Trudeau.html */
+.outer_wall { text-align: center; display: table; margin: 1em; }
+.instructions { width: 23%; font-size: 1.1em; display: table-cell; }
 .wall { 
-        height: 400px; 
+        display: table-cell;
+        height: 200px; 
       }
 .wall_inner { 
-              margin-left: 30pt;
+              margin-left: 15pt;
               position: relative;
             }
 
-.trudeau_all { width: 316px; height: 407px; display: inline-block; 
-               background-image: url('images/lineup_background.png'); 
+.trudeau_all { width: 158px; height: 204px; display: inline-block; 
+               background-image: url('images/lineup_background_small.png'); 
              }
-.obama_all { width: 316px; height: 407px; display: inline-block;
-             background-image: url('images/lineup_background.png'); 
+.user_all { width: 158px; height: 204px; display: inline-block;
+             background-image: url('images/lineup_background_small.png'); 
            }
 
 #trudeauSlider { width: 10px; height: 100%; background: #377ba8; }
-#obamaSlider { width: 10px; height: 100%; background: #377ba8; }
-#userSlider { height: 10px; width: 18%; background: #377ba8; }
+#userSlider { width: 10px; height: 100%; background: #377ba8; }
 
 .trudeau_stack { text-align: center; }
 .trudeau_stack div { width: 196px; margin-left: 10px; position: absolute; bottom: 0;}
-.trudeau_stack div:nth-child(2) { margin-left: 8px; margin-bottom: 192px; }
-#trudeauLabel { position: absolute; width: 120px;
-                margin: 5px; left: 175px; bottom: 90px; background: #ebebe0;
+.trudeau_stack div:nth-child(2) { margin-left: 8px; margin-bottom: 96px; }
+#trudeauLabel { position: absolute; width: 75px;
+                margin: 5px; left: 10px; bottom: 15px; background: #ebebe0;
                 color: blue;
-                font-weight: bold; font-size: 1.5em; }
+                font-weight: bold; font-size: 0.8em; }
 
-.obama_stack { text-align: center; }
-.obama_stack div { width: 196px; margin-left: 10px; position: absolute; bottom: 0;}
-#obamaLabel { position: absolute; width: 120px;
-              margin: 5px; left: 175px; bottom: 90px; background: #ebebe0;
-              color: blue;
-              font-weight: bold; font-size: 1.5em; }
+.user_stack { text-align: center; }
+.user_stack div { width: 196px; margin-left: 10px; position: absolute; bottom: 0;}
+#userLabel { position: absolute; width: 75px;
+             margin: 5px; left: 10px; bottom: 15px; background: #ebebe0;
+             color: blue;
+             font-weight: bold; font-size: 0.8em; }
 
 .user_slider_all { margin: 1em auto; text-align: center; }
-.user_slider_all div { display: inline-block; font-weight: bold; font-size: 1.25em; }
+.user_slider_all div { display: inline-block; font-weight: bold; font-size: 1.1em; }
 .user_slider_all div:nth-child(1) { width: 60%; }
 .user_slider_all div:nth-child(2) { width: 15%; }
 .user_slider_all div:nth-child(3) { width: 15%; }
 
 .user_gender_all { margin: 1em auto; text-align: center; }
-.user_gender_all div { display: inline-block; font-weight: bold; font-size: 1.25em; }
+.user_gender_all div { display: inline-block; font-weight: bold; font-size: 1.1em; }
 
