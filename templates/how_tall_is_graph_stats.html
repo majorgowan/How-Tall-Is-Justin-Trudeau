@@ -15,7 +15,7 @@
   </div>
 
 <script>
-function scatter(female_user, female_trudeau, male_user, male_trudeau, neither_user, neither_trudeau) {
+function scatter(female_user, female_height, male_user, male_height, neither_user, neither_height) {
     var graph = document.getElementById("graph");
     graph.width = graph.width;   /* "magic" to clear graph or something */
     var g = graph.getContext("2d");
@@ -68,16 +68,16 @@ function scatter(female_user, female_trudeau, male_user, male_trudeau, neither_u
        
     }
 
-    plot_points(female_user, female_trudeau, "#ff0066");
-    plot_points(male_user, male_trudeau, "#005580");
-    plot_points(neither_user, neither_trudeau, "#a3a375");
+    plot_points(female_user, female_height, "#ff0066");
+    plot_points(male_user, male_height, "#005580");
+    plot_points(neither_user, neither_height, "#a3a375");
 }
 
 /* call function to make plot */
 
-scatter({{ female_user }}, {{ female_trudeau }},
-        {{ male_user }}, {{ male_trudeau }},
-        {{ neither_user }}, {{ neither_trudeau }});
+scatter({{ female_user }}, {{ female_height }},
+        {{ male_user }}, {{ male_height }},
+        {{ neither_user }}, {{ neither_height }});
 
 </script> 
   
