@@ -43,23 +43,23 @@ h2             { font-size: 1.2em; }
               position: relative;
             }
 
-.trudeau_all { width: 158px; height: 204px; display: inline-block; 
+.height_all { width: 158px; height: 204px; display: inline-block; 
                background-image: url('images/lineup_background_small.png'); 
              }
 .user_all { width: 158px; height: 204px; display: inline-block;
              background-image: url('images/lineup_background_small.png'); 
            }
 
-#trudeauSlider { width: 10px; height: 100%; background: #377ba8; }
+#heightSlider { width: 10px; height: 100%; background: #377ba8; }
 #userSlider { width: 10px; height: 100%; background: #377ba8; }
 
-.trudeau_stack { text-align: center; }
-.trudeau_stack div { width: 196px; margin-left: 10px; position: absolute; bottom: 0;}
-.trudeau_stack div:nth-child(2) { margin-left: 8px; margin-bottom: 96px; }
-#trudeauLabel { position: absolute; width: 75px;
-                margin: 5px; left: 10px; bottom: 15px; background: #ebebe0;
-                color: blue;
-                font-weight: bold; font-size: 0.8em; }
+.height_stack { text-align: center; }
+.height_stack div { width: 196px; margin-left: 10px; position: absolute; bottom: 0;}
+.height_stack div:nth-child(2) { margin-left: 8px; margin-bottom: 96px; }
+#heightLabel { position: absolute; width: 75px;
+               margin: 5px; left: 10px; bottom: 15px; background: #ebebe0;
+               color: blue;
+               font-weight: bold; font-size: 0.8em; }
 
 .user_stack { text-align: center; }
 .user_stack div { width: 196px; margin-left: 10px; position: absolute; bottom: 0;}

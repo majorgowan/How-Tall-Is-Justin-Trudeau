@@ -2,7 +2,9 @@
 {% block body %}
   <div class=menu>
       <ul>
-          <li> <a href={{ url_for('how_tall_is') }}>How tall is Justin Trudeau?</a>
+          <li> <a href={{ url_for('how_tall_is',name='trudeau') }}>How tall is Justin Trudeau?</a>
+          <li> <a href={{ url_for('how_tall_is',name='obama') }}>How tall is Barack Obama?</a>
+          <li> <a href={{ url_for('how_tall_is',name='merkel') }}>How tall is Angela Merkel?</a>
       </ul>
   </div>
 {% endblock %}

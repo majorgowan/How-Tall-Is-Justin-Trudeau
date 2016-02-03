@@ -1,7 +1,16 @@
 {% extends "layout.html" %}
+{% block heading %}
+  {% if name=='trudeau' %}
+    <h1>How tall is Justin Trudeau??</h1>
+  {% elif name=='obama' %}
+    <h1>How tall is Barack Obama??</h1>
+  {% elif name=='merkel' %}
+    <h1>How tall is Angela Merkel??</h1>
+  {% endif %}
+{% endblock %}
 {% block body %}
   <div class=questions>
-  <form action="{{ url_for('how_tall_is_graph_stats') }}" method=post class=add-entry>
+      <form action="{{ url_for('how_tall_is_graph_stats',name=name) }}" method=post class=add-entry>
 
       <table class="outer_wall"><tr>
           <td class="instructions">
@@ -16,7 +25,7 @@
                       <div class="user_stack">
                           <div>
                               <div>
-                                  <img id="user_image" height=130 align=center 
+                                  <img id="user_image" height=135 align=center 
                                        src="{{ url_for('static', filename='images/user_picture_trans.png') }}" />
                               </div>
                               <div id="userLabel">
@@ -26,12 +35,13 @@
                       </div>
                   </div>
                   &nbsp;&nbsp;
-                  <div class="trudeau_all">
-                      <div id="trudeauSlider">
+                  <div class="height_all">
+                      <div id="heightSlider">
                           <span id="infoSlider"></span>
                       </div>
-                      <div class="trudeau_stack">
+                      <div class="height_stack">
                           <div>
+                            {% if name=='trudeau' %}
                               <div>
                                   <!--<img height=180 align=center src="superman_transparent.png" />-->
                                   <img height=140 align=center
@@ -39,10 +49,21 @@
                               </div>
                               <div>
                                   <!-- trudeau's head -->
-                                  <img id="image" align=center height=45 
+                                  <img id="image" align=center height=50 
                                        src="{{ url_for('static', filename='images/trudeau_head_transparent_trim.png') }}" />
                               </div>
-                              <div id="trudeauLabel">
+                            {% elif name=='obama' %}
+                              <div>
+                                  <img id="image" height=135 align=center 
+                                       src="{{ url_for('static', filename='images/obama_off_white_trans.png') }}" />
+                              </div>
+                            {% elif name=='merkel' %}
+                              <div>
+                                  <img id="image" height=135 align=center 
+                                       src="{{ url_for('static', filename='images/angela_merkel_trans.png') }}" />
+                              </div>
+                            {% endif %}
+                              <div id="heightLabel">
                                   5 ft, 0.0 in
                               </div>
                           </div>
@@ -51,7 +72,13 @@
               </div>
           </div>
           <td class="instructions">
-              <p align=center>Now adjust the slider to guess the height of the real J.T.</p>
+              {% if name=='trudeau' %}
+                <p align=center>Now adjust the slider to guess the height of the real J.T.</p>
+              {% elif name=='obama' %}
+                <p align=center>Now adjust the slider to guess Barack's height</p>
+              {% elif name=='merkel' %}
+                <p align=center>Now adjust the slider to guess the height of Frau Merkel</p>
+              {% endif %}
           </td>
       </tr></table>
 
@@ -74,7 +101,7 @@
          <input type=submit name=submit value="submit!">
       </p>
       <!-- hidden values for Flask retrieval -->
-      <input type="hidden" id="trudeauHeightHidden" name="trudeauHeightHidden" value="600">
+      <input type="hidden" id="heightHidden" name="heightHidden" value="600">
       <input type="hidden" id="userHeightHidden" name="userHeightHidden" value="600">
   </form>
   </div>
@@ -93,35 +120,44 @@
 /* slider to resize image */
 
 var originalHeight = $("#image").height();
-$("#image").height(1.0*originalHeight)
+var factor;
+var inchShift;
+var fracShift;
+{% if name=='trudeau' %}
+    factor = 0.58333;
+    inchShift = 600;
+    fracShift = 0;
+{% else %}
+    factor = 0.20417;
+    inchShift = 600;
+    fracShift = 8;
+{% endif %}
+$("#image").height((1+fracShift/100)*originalHeight)
 
 /* $("#infoSlider").text(originalHeight + ', 100%'); */
 
-$("#trudeauSlider").slider({
+$("#heightSlider").slider({
     value: 600,
     orientation: 'vertical',
     min: 600,
     max: 840,
     step: 5,
     slide: function (event, ui) {
-        var factor = 0.58333
-        var inchShift = 600
-        var fracShift = 0
-        var frac = fracShift + (ui.value-inchShift)*factor
-        var fraction = (1 + frac / 100),
+        var frac = fracShift + (ui.value-inchShift)*factor;
+        var fraction = (1 + frac / 100);
         newHeight = originalHeight * fraction;
 
 /*        $("#infoSlider").text(Math.floor(newHeight)); */
 
         $("#image").height(newHeight);
 
-        feet = Math.floor(0.1/12.0*ui.value)
-        inches = 0.1*ui.value - 12.0*feet
-        document.getElementById("trudeauLabel").textContent = feet + " ft, " + inches.toFixed(1) + " in";
+        feet = Math.floor(0.1/12.0*ui.value);
+        inches = 0.1*ui.value - 12.0*feet;
+        document.getElementById("heightLabel").textContent = feet + " ft, " + inches.toFixed(1) + " in";
     },
     /* set value of hidden trudeaHeight element */
     change: function (event, ui) {
-        $("#trudeauHeightHidden").attr('value', ui.value);
+        $("#heightHidden").attr('value', ui.value);
     }
 });
 

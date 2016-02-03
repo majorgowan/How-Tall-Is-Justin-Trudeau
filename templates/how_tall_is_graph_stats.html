@@ -1,4 +1,13 @@
 {% extends "layout.html" %}
+{% block heading %}
+  {% if name=='trudeau' %}
+    <h1>How tall is Justin Trudeau??</h1>
+  {% elif name=='obama' %}
+    <h1>How tall is Barack Obama??</h1>
+  {% elif name=='merkel' %}
+    <h1>How tall is Angela Merkel??</h1>
+  {% endif %}
+{% endblock %}
 {% block body %}
   <div>
     <p align=center><canvas id="graph" width="400px" height="300px"></canvas>
