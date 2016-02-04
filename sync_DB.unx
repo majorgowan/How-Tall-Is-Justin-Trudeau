@@ -1,0 +1,3 @@
+#!/bin/bash
+
+scp 56afc8270c1e66c43e000066@sillysurveys-majorgowan.rhcloud.com:app-root/runtime/data/graphyDB.db .
