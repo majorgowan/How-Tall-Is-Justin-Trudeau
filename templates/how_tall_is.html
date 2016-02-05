@@ -1,110 +1,108 @@
 {% extends "layout.html" %}
-{% block heading %}
-  {% if name=='trudeau' %}
-    <h1>How tall is Justin Trudeau??</h1>
-  {% elif name=='obama' %}
-    <h1>How tall is Barack Obama??</h1>
-  {% elif name=='merkel' %}
-    <h1>How tall is Angela Merkel??</h1>
-  {% endif %}
-{% endblock %}
-{% block body %}
-  <div class=questions>
-      <form action="{{ url_for('how_tall_is_graph_stats',name=name) }}" method=post class=add-entry>
 
-      <table class="outer_wall"><tr>
-          <td class="instructions">
-              <p align=center>Please adjust the slider to your own height</p>
-          </td>
-          <td class="wall">
-              <div class="wall_inner">
-                  <div class="user_all">
-                      <div id="userSlider">
-                          <span id="infoSlider"></span>
-                      </div>
-                      <div class="user_stack">
+{% if name=='trudeau' %}
+  {% set heading="How tall is Justin Trudeau??" %}
+{% elif name=='obama' %}
+  {% set heading="How tall is Barack Obama??" %}
+{% elif name=='merkel' %}
+  {% set heading="How tall is Angela Merkel??" %}
+{% endif %}
+
+{% block body %}
+<form action="{{ url_for('how_tall_is_graph_stats',name=name) }}" method=post class=add-entry>
+
+  <table class="outer_wall"><tr>
+      <td class="instructions">
+          <p align=center>Please adjust the slider to your own height</p>
+      </td>
+      <td class="wall">
+          <div class="wall_inner">
+              <div class="user_all">
+                  <div id="userSlider">
+                      <span id="infoSlider"></span>
+                  </div>
+                  <div class="user_stack">
+                      <div>
                           <div>
-                              <div>
-                                  <img id="user_image" height=135 align=center 
-                                       src="{{ url_for('static', filename='images/user_picture_trans.png') }}" />
-                              </div>
-                              <div id="userLabel">
-                                  5 ft, 0.0 in
-                              </div>
+                              <img id="user_image" height=135 align=center 
+                                   src="{{ url_for('static', filename='images/user_picture_trans.png') }}" />
+                          </div>
+                          <div id="userLabel">
+                              5 ft, 0.0 in
                           </div>
                       </div>
                   </div>
-                  &nbsp;&nbsp;
-                  <div class="height_all">
-                      <div id="heightSlider">
-                          <span id="infoSlider"></span>
-                      </div>
-                      <div class="height_stack">
+              </div>
+              &nbsp;&nbsp;
+              <div class="height_all">
+                  <div id="heightSlider">
+                      <span id="infoSlider"></span>
+                  </div>
+                  <div class="height_stack">
+                      <div>
+                        {% if name=='trudeau' %}
                           <div>
-                            {% if name=='trudeau' %}
-                              <div>
-                                  <!--<img height=180 align=center src="superman_transparent.png" />-->
-                                  <img height=140 align=center
-                                       src="{{ url_for('static', filename='images/trudeau_body_headless.png') }}" />
-                              </div>
-                              <div>
-                                  <!-- trudeau's head -->
-                                  <img id="image" align=center height=50 
-                                       src="{{ url_for('static', filename='images/trudeau_head_transparent_trim.png') }}" />
-                              </div>
-                            {% elif name=='obama' %}
-                              <div>
-                                  <img id="image" height=135 align=center 
-                                       src="{{ url_for('static', filename='images/obama_off_white_trans.png') }}" />
-                              </div>
-                            {% elif name=='merkel' %}
-                              <div>
-                                  <img id="image" height=135 align=center 
-                                       src="{{ url_for('static', filename='images/angela_merkel_trans.png') }}" />
-                              </div>
-                            {% endif %}
-                              <div id="heightLabel">
-                                  5 ft, 0.0 in
-                              </div>
+                              <!--<img height=180 align=center src="superman_transparent.png" />-->
+                              <img height=140 align=center
+                                   src="{{ url_for('static', filename='images/trudeau_body_headless.png') }}" />
+                          </div>
+                          <div>
+                              <!-- trudeau's head -->
+                              <img id="image" align=center height=50 
+                                   src="{{ url_for('static', filename='images/trudeau_head_transparent_trim.png') }}" />
+                          </div>
+                        {% elif name=='obama' %}
+                          <div>
+                              <img id="image" height=135 align=center 
+                                   src="{{ url_for('static', filename='images/obama_off_white_trans.png') }}" />
+                          </div>
+                        {% elif name=='merkel' %}
+                          <div>
+                              <img id="image" height=135 align=center 
+                                   src="{{ url_for('static', filename='images/angela_merkel_trans.png') }}" />
+                          </div>
+                        {% endif %}
+                          <div id="heightLabel">
+                              5 ft, 0.0 in
                           </div>
                       </div>
                   </div>
               </div>
           </div>
-          <td class="instructions">
-              {% if name=='trudeau' %}
-                <p align=center>Now adjust the slider to guess the height of the real J.T.</p>
-              {% elif name=='obama' %}
-                <p align=center>Now adjust the slider to guess Barack's height</p>
-              {% elif name=='merkel' %}
-                <p align=center>Now adjust the slider to guess the height of Frau Merkel</p>
-              {% endif %}
-          </td>
-      </tr></table>
-
-      <div class="user_gender_all">
-          <div> What is your gender (iinapq)?
-          </div>
-          &nbsp;
-          &nbsp;
-          <div id="user_gender_radio">
-              <input type="radio" name="gender" value="male"> Male 
-              &nbsp;
-              &nbsp;
-              <input type="radio" name="gender" value="female"> Female
-              <input type="hidden" name="gender" value="neither" checked="checked">
-          </div>
       </div>
+      <td class="instructions">
+          {% if name=='trudeau' %}
+            <p align=center>Now adjust the slider to guess the height of the real J.T.</p>
+          {% elif name=='obama' %}
+            <p align=center>Now adjust the slider to guess Barack's height</p>
+          {% elif name=='merkel' %}
+            <p align=center>Now adjust the slider to guess the height of Frau Merkel</p>
+          {% endif %}
+      </td>
+  </tr></table>
 
-
-      <p align=center>
-         <input type=submit name=submit value="submit!">
-      </p>
-      <!-- hidden values for Flask retrieval -->
-      <input type="hidden" id="heightHidden" name="heightHidden" value="600">
-      <input type="hidden" id="userHeightHidden" name="userHeightHidden" value="600">
-  </form>
+  <div class="user_gender_all">
+      <div> What is your gender (iinapq)?
+      </div>
+      &nbsp;
+      &nbsp;
+      <div id="user_gender_radio">
+          <input type="radio" name="gender" value="male"> Male 
+          &nbsp;
+          &nbsp;
+          <input type="radio" name="gender" value="female"> Female
+          <input type="hidden" name="gender" value="neither" checked="checked">
+      </div>
   </div>
+
+
+  <p align=center>
+     <input type=submit name=submit value="submit!">
+  </p>
+  <!-- hidden values for Flask retrieval -->
+  <input type="hidden" id="heightHidden" name="heightHidden" value="600">
+  <input type="hidden" id="userHeightHidden" name="userHeightHidden" value="600">
+</form>
 
 
 <script type="text/javascript" 
